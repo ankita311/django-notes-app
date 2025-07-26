@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg text-white" style="background-color: #C879FF;">
+  <div class="container-fluid">
+    <a class="navbar-brand ms-3" href="{% url 'home' %}">Notes</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      {% if user.is_authenticated %}
+        <!-- <span class="navbar-text me-3">
+          Hello, {{ user.username }}!
+        </span> -->
+        
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+          <!-- <button class="btn btn-outline-" style="outline-color: #FFE8D1;" type="submit">Search</button> -->
+          <button type="submit" class="btn" style="
+              color: #FFE8D1;
+              border: 1px solid #FFE8D1;
+              background-color: transparent;
+            "
+            onmouseover="this.style.backgroundColor='#FFE8D1'; this.style.color='black';"
+            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#FFE8D1';"
+          >Search</button>
+
+        </form>
+        <a class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center ms-3 text-decoration-none" style="width: 35px; height: 35px;"
+        href="#">
+          {{ user.username|first|upper }}
+        </a>
+      {% else %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Login</a>
+          </li>
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+</nav>

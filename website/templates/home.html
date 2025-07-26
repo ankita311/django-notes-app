@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <!-- <h2>Welcome {{ user.username }}!</h2><br/> -->
+    <h1>What's on your mind today?</h1><br/>
+    <a href="{% url 'add_note' %}" class="btn btn-primary">Add Note</a><br/><br/>
+    <div class="row">
+        
+    {% if notes %}
+        {% for note in notes %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ note.title }}</h5>
+                    <p class="card-text">{{ note.content }}</p>
+                    <a href="{% url 'view_note' note.id %}" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+            
+
+        <!-- <div class="col-md-4 mb-4">
+            <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+            </div>
+        </div>
+    </div> -->
+
+{% else %}
+    <div class="col-md-6 offset-md-3">
+        <h1>Login</h1>
+        <form method="POST" action="{% url 'home' %}">
+            <!-- cross-site ref token so that the form doesn't get hacked -->
+            {% csrf_token %}
+            <br/>
+            <div class="mb-3"> 
+                <input type="text" class="form-control" aria-describedby="emailHelp" name="username" placeholder="User Name" required>
+            </div>
+            <br/>
+            <div class="mb-3">
+                <input type="password" class="form-control" name="password" placeholder="Password" required >
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-secondary">Login</button>
+        </form>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <strong>{{ note.title }}</strong>
+  </div>
+  <div class="card-body ms-3">
+    <p class="card-text">{{ note.content }}</p>
+    
+  </div>
+</div>
+
+<br/><br/>
+
+<div class="text-center mt-3">
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+    <a href="{% url 'update_note' note.id %}" class="btn btn-primary">Update</a>
+    <a href="{% url 'delete_note' note.id %}" class="btn btn-danger">Delete</a>
+</div>
+
+
+
+{% endblock %}
