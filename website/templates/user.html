@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <strong>{{ user_info.get_full_name }}</strong>
+  </div>
+  <div class="card-body ms-3">
+    <p class="card-text"><strong>ID:</strong> {{ user_info.id }}</p><br/>
+    <p class="card-text"><strong>Username:</strong> {{ user_info.username }}</p><br/>
+    <p class="card-text"><strong>Email:</strong> {{ user_info.email }}</p> 
+  </div>
+</div><br/><br/>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+{% endblock %}

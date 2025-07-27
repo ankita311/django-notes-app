@@ -15,21 +15,17 @@
             <a class="nav-link" href="{% url 'logout' %}">Logout</a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-          <!-- <button class="btn btn-outline-" style="outline-color: #FFE8D1;" type="submit">Search</button> -->
+        <form class="d-flex" role="search" method="GET" action="{% url 'home' %}">
+          <input class="form-control me-2" type="search" name="q" placeholder="Search" aria-label="Search"/>
           <button type="submit" class="btn" style="
-              color: #FFE8D1;
-              border: 1px solid #FFE8D1;
-              background-color: transparent;
-            "
-            onmouseover="this.style.backgroundColor='#FFE8D1'; this.style.color='black';"
-            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#FFE8D1';"
+              color: black;
+              background-color: #FFE8D1;
+            "  
           >Search</button>
 
         </form>
         <a class="rounded-circle bg-dark text-white d-flex justify-content-center align-items-center ms-3 text-decoration-none" style="width: 35px; height: 35px;"
-        href="#">
+        href="{% url 'user' %}">
           {{ user.username|first|upper }}
         </a>
       {% else %}
@@ -45,3 +41,4 @@
     </div>
   </div>
 </nav>
+

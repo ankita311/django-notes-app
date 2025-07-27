@@ -29,7 +29,17 @@ class SignUpForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
-
+    
+    def save(self, commit=True):
+        user = super(SignUpForm, self).save(commit=False)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        if commit:
+            user.save()
+        return user
+    
+    
 class AddNoteForm(forms.ModelForm):
     title = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={'class': 'form-control', 'placeholder': 'Title'}), label="")
     content = forms.CharField(required=True, widget=forms.widgets.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content'}), label="")

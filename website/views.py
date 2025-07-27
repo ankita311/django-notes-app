@@ -3,12 +3,20 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm, AddNoteForm
 from .models import Note 
+from django.db.models import Q
 
 # Create your views here.
 def home(request):
     notes = []
     if request.user.is_authenticated:
-        notes = Note.objects.filter(user = request.user).order_by("-created_at")
+        query = request.GET.get('q')  # get the query from URL params
+        if query:
+            notes = Note.objects.filter(
+                Q(user=request.user) & 
+                (Q(title__icontains=query) | Q(content__icontains=query))
+            )
+        else:
+            notes = Note.objects.filter(user = request.user).order_by("-created_at")
     
     if request.method == 'POST':
         username = request.POST['username']
@@ -91,6 +99,14 @@ def update_note(request, pk):
             messages.success(request, "Note Updated Successfully")
             return redirect('home')
         return render(request, 'update_note.html', {'form': form})
+    else:
+        messages.success(request, "You must be logged in to perform this action")
+        return redirect('home')
+
+def view_user(request):
+    if request.user.is_authenticated:
+        user_info = request.user
+        return render(request, 'user.html', {'user_info': user_info})
     else:
         messages.success(request, "You must be logged in to perform this action")
         return redirect('home')
