@@ -1,0 +1,35 @@
+databases:
+  - name: notes-app-db
+    databaseName: notes_app_db
+    user: notes_app_user
+
+services:
+  - type: web
+    name: notes-app-web
+    runtime: docker
+    plan: free
+    envVars:
+      - key: DB_NAME
+        fromDatabase:
+          name: notes-app-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: notes-app-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: notes-app-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: notes-app-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: notes-app-db
+          property: port
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
